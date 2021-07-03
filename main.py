@@ -13,7 +13,7 @@ class Assembly:
         for part in cl.strip().split(','):
             qty, upc = part.split('x')
 
-            components[upc] = qty
+            components[int(upc)] = int(qty)
 
         return components
 
@@ -22,8 +22,10 @@ class Assembly:
 
         for upc, qty in other.components.items():
             combined_components[upc] += qty
-
-        return Assembly(self.component_list + ',' + other.component_list)
+            
+        combined_component_list = [f'{qty}x{upc}' for upc, qty in combined_components.items()]
+        cc = ','.join(combined_component_list)
+        return Assembly(cc)
 
     def __repr__(self):
         return str(self.components)
@@ -42,7 +44,9 @@ def get_data():
     assy1 = Assembly(cl)
     assy2 = Assembly(cl)
 
-    print (assy1, assy2, assy1+assy2)
+    print ('Assembly 1', assy1)
+    print ('Assembly 2', assy2)
+    print ('Assembly 1 + 2', assy1+assy2)
     
 if __name__ == '__main__':
     get_data()
